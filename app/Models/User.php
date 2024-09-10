@@ -41,4 +41,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    //Relationships
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class); //One-to-One: Each user has one wallet
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class); //One-to-One: Each user has one cart.
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class); //One to Many: A user can create multiple orders.
+    }
 }
