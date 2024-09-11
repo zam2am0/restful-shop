@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/orders/{orderId}/pay', [PaymentController::class, 'pay']);
+
+Route::get('/payment/callback', [PaymentController::class, 'thawaniCallback']);
+
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
 require __DIR__.'/auth.php';
+
+

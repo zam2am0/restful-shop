@@ -32,7 +32,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 // User registration and authentication routes
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth:sanctum');
+//Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+
 
 // Password reset routes
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store']);
