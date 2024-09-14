@@ -19,6 +19,7 @@ Database Setup
     •	Run Seed the database with sample data 
 
 Run the Application
+
     •	php artisan serve
 
 Testing the API with Postman
