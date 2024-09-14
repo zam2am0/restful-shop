@@ -48,10 +48,10 @@ class ProductController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'stock_quantity' => 'required|integer|min:0',
+            'Name' => 'required|string|max:255',
+            'Description' => 'required|string',
+            'Price' => 'required|numeric|min:0',
+            'StockQuantity' => 'required|integer|min:0',
         ]);
 
 
@@ -123,10 +123,10 @@ class ProductController extends Controller
 
     // Validate data.
     $validatedData = $request->validate([
-        'name' => 'sometimes|string|max:255',
-        'price' => 'sometimes|numeric',
-        'description' => 'nullable|string',
-        'stock_quantity' => 'sometimes|integer',
+        'Name' => 'sometimes|string|max:255',
+        'Price' => 'sometimes|numeric',
+        'Description' => 'nullable|string',
+        'StockQuantity' => 'sometimes|integer',
     ]);
 
     try {

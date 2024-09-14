@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('UserID')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->decimal('Balance', 10, 2)->default(0.00);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
+        
     }
 
     /**

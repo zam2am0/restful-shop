@@ -38,7 +38,8 @@ class WalletController extends Controller
     public function store(Request $request): JsonResponse
     {
         $user = Auth::user();
-        $wallet = $user->wallet;
+        //$wallet = $user->wallet;
+        $wallet = Wallet::where('user_id', $user->id)->first(); // Use the correct column name
 
         // Validate the amount being added
         $request->validate([

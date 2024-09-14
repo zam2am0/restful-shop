@@ -18,9 +18,20 @@ class CartController extends Controller
     public function index(): JsonResponse
     {
         $user = Auth::user();
-        $cart = $user->cart;
+        
+        // Check if the user has a cart
+        $cart = Cart::where('user_id', $user->id)->first();
 
-        if (!$cart || $cart->items->isEmpty()) {
+        if (!$cart) {
+            return response()->json([
+                'success' => false,
+                'description' => 'No cart found for the user',
+                'data' => null
+            ], 404);
+        }
+
+        // Check if the cart has items
+        if ($cart->cartItems->isEmpty()) {
             return response()->json([
                 'success' => false,
                 'description' => 'Cart is empty',
@@ -28,20 +39,22 @@ class CartController extends Controller
             ], 404);
         }
 
-        // Calculate total cost of items
-        $totalCost = $cart->items->sum(function($item) {
-            return $item->product->Price * $item->quantity;
+        // Calculate the total cost of items
+        $totalCost = $cart->cartItems->sum(function($item) {
+            return $item->product->Price * $item->Quantity;
         });
 
         return response()->json([
             'success' => true,
             'description' => 'Cart retrieved successfully',
             'data' => [
-                'items' => $cart->items,
+                'items' => $cart->cartItems,
                 'total_cost' => $totalCost
             ]
         ], 200);
     }
+
+
 
     /**
      * Add product to the cart.
@@ -93,7 +106,7 @@ class CartController extends Controller
         $user = Auth::user();
         $cart = $user->cart;
 
-        if (!$cart || $cart->items->isEmpty()) {
+        if (!$cart || $cart->cartItems->isEmpty()) {
             return response()->json([
                 'success' => false,
                 'description' => 'Cart is empty',
@@ -101,7 +114,7 @@ class CartController extends Controller
             ], 404);
         }
 
-        $totalCost = $cart->items->sum(function($item) {
+        $totalCost = $cart->cartItems->sum(function($item) {
             return $item->product->Price * $item->quantity;
         });
 
@@ -121,7 +134,7 @@ class CartController extends Controller
             $wallet->save();
 
             // Adjust the stock of each product in the cart
-            foreach ($cart->items as $item) {
+            foreach ($cart->cartItems as $item) {
                 $product = $item->product;
                 $product->StockQuantity -= $item->quantity;
                 $product->save();

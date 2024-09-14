@@ -46,7 +46,7 @@ class User extends Authenticatable
     //Relationships
     public function wallet()
     {
-        return $this->hasOne(Wallet::class); //One-to-One: Each user has one wallet
+        return $this->hasOne(Wallet::class,'user_id','id'); //One-to-One: Each user has one wallet
     }
 
     public function cart()

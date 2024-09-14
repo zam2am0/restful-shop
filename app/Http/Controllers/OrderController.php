@@ -43,7 +43,7 @@ class OrderController extends Controller
         $user = Auth::user();
         $cart = $user->cart;
 
-        if (!$cart || $cart->items->isEmpty()) {
+        if (!$cart || $cart->cartItems->isEmpty()) {
             return response()->json([
                 'success' => false,
                 'description' => 'Cart is empty. Cannot place an order.',
@@ -52,20 +52,20 @@ class OrderController extends Controller
         }
 
         // Calculate total amount
-        $totalAmount = $cart->items->sum(function($item) {
+        $totalAmount = $cart->cartItems->sum(function($item) {
             return $item->product->Price * $item->quantity;
         });
 
         try {
             // Create a new order
             $order = Order::create([
-                'UserID' => $user->id,
+                'user_id' => $user->id,
                 'TotalAmount' => $totalAmount,
                 'PaymentStatus' => 'Pending'
             ]);
 
             // Move items from cart to order
-            foreach ($cart->items as $cartItem) {
+            foreach ($cart->cartItems as $cartItem) {
                 OrderItem::create([
                     'OrderID' => $order->id,
                     'ProductID' => $cartItem->product->id,
@@ -75,7 +75,7 @@ class OrderController extends Controller
             }
 
             // Clear the user's cart after placing the order
-            $cart->items()->delete();
+            $cart->cartItems()->delete(); // Updated line
 
             return response()->json([
                 'success' => true,
@@ -91,6 +91,7 @@ class OrderController extends Controller
         }
     }
 
+    
     /**
      * Display the specified order.
      */
@@ -119,6 +120,7 @@ class OrderController extends Controller
      */
     public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
+        
         return Excel::download(new OrdersExport, 'orders.xlsx');
     }
 

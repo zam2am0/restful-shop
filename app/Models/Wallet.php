@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Wallet extends Model
 {
     use HasFactory;
-    protected $fillable = ['UserID', 'Balance'];
+    protected $fillable = ['user_id', 'Balance'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 }

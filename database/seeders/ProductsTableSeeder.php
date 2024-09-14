@@ -22,8 +22,6 @@ class ProductsTableSeeder extends Seeder
                 'Description' => 'Description for Product ' . $i,
                 'Price' => 10.00 + $i, // Example prices ranging from 11.00 to 20.00
                 'StockQuantity' => rand(1, 100), // Random stock quantity between 1 and 100
-                'created_at' => now(),
-                'updated_at' => now(),
             ];
         }
 

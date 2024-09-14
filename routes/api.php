@@ -10,7 +10,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ExcelController; // for exporting orders
 
 /*
 |--------------------------------------------------------------------------
@@ -53,5 +52,5 @@ Route::resource('cart', CartController::class)->middleware('auth:sanctum');
 // Order routes
 Route::resource('orders', OrderController::class)->middleware('auth:sanctum');
 
-// Export orders to Excel route
-Route::get('/exports/orders', [ExcelController::class, 'exportOrders'])->middleware('auth:sanctum');
+
+Route::get('/orders/export', [OrderController::class, 'export'])->middleware('auth:sanctum');
