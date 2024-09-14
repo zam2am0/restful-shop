@@ -1,8 +1,12 @@
 ## Getting Started with the Laravel RESTful API (Onlin Shop)
+
 Prerequisites
     •	MySQL or any other database
+
     •	Using Laravel 10
+
     •	Postman (for API testing)
+
 Installation
     •	Use Composer to install the PHP dependencies:
         - composer install
